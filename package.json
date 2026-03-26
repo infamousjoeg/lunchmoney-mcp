@@ -1,5 +1,5 @@
 {
-  "name": "lunchmoney-mcp",
+  "name": "@infamousjoeg/lunchmoney-mcp",
   "version": "0.1.0",
   "description": "The definitive MCP server for Lunch Money — local (stdio) and remote (HTTP) with secure credential storage",
   "type": "module",
