@@ -17,6 +17,12 @@ export default defineConfig({
         "src/setup.ts",
       ],
       reporter: ["text", "lcov"],
+      thresholds: {
+        lines: 90,
+        functions: 90,
+        branches: 75,
+        statements: 90,
+      },
     },
   },
 });
