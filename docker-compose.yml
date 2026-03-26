@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  lunchmoney-mcp:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - LUNCH_MONEY_API_TOKEN=${LUNCH_MONEY_API_TOKEN}
+      - AUTH_PROVIDER=${AUTH_PROVIDER:-google}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - BASE_URL=${BASE_URL:-http://localhost:8080}
+      - PORT=8080
+    restart: unless-stopped
