@@ -1,4 +1,5 @@
 import { GoogleProvider, GitHubProvider } from "fastmcp";
+import type { TokenStorage } from "fastmcp/auth";
 
 export type AuthProviderType = "google" | "github";
 
@@ -7,6 +8,10 @@ export interface AuthProviderOptions {
   baseUrl: string;
   clientId: string;
   clientSecret: string;
+  /** Token storage backend for persisting OAuth sessions across restarts */
+  tokenStorage?: TokenStorage;
+  /** Encryption key for token storage (set to false to disable if already encrypted, or provide a hex string) */
+  encryptionKey?: false | string;
 }
 
 /**
@@ -24,6 +29,8 @@ export function createAuthProvider(options: AuthProviderOptions) {
         baseUrl,
         scopes: ["openid", "email"],
         consentRequired: false,
+        ...(options.tokenStorage && { tokenStorage: options.tokenStorage }),
+        ...(options.encryptionKey !== undefined && { encryptionKey: options.encryptionKey }),
       });
 
     case "github":
@@ -32,6 +39,8 @@ export function createAuthProvider(options: AuthProviderOptions) {
         clientSecret,
         baseUrl,
         scopes: ["read:user", "user:email"],
+        ...(options.tokenStorage && { tokenStorage: options.tokenStorage }),
+        ...(options.encryptionKey !== undefined && { encryptionKey: options.encryptionKey }),
       });
 
     default:

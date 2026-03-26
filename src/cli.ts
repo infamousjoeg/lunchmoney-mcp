@@ -7,6 +7,8 @@ import {
   getAuthCredentialsFromEnv,
   type AuthProviderType,
 } from "./auth-provider.js";
+import { CredentialStore } from "./credential-store.js";
+import { createSessionStore } from "./session-store.js";
 import { createRequire } from "module";
 
 export interface CLIOptions {
@@ -91,11 +93,18 @@ async function main() {
       const { clientId, clientSecret } = getAuthCredentialsFromEnv(providerType);
       const baseUrl = process.env.BASE_URL || `http://localhost:${options.port}`;
 
+      // Create encrypted session store for persisting OAuth tokens across restarts
+      const credentialStore = new CredentialStore();
+      const tokenStorage = await createSessionStore(credentialStore);
+
       const auth = createAuthProvider({
         provider: providerType,
         baseUrl,
         clientId,
         clientSecret,
+        tokenStorage,
+        // Disable FastMCP's built-in encryption since EncryptedTokenStorage already handles it
+        encryptionKey: false,
       });
 
       const server = await createServer({ auth, health: true });
