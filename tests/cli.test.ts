@@ -132,10 +132,20 @@ describe("resolveAuthProvider", () => {
     expect(resolveAuthProvider()).toBe("github");
   });
 
+  it("returns cyberark when AUTH_PROVIDER=cyberark", () => {
+    process.env.AUTH_PROVIDER = "cyberark";
+    expect(resolveAuthProvider()).toBe("cyberark");
+  });
+
+  it("returns custom when AUTH_PROVIDER=custom", () => {
+    process.env.AUTH_PROVIDER = "custom";
+    expect(resolveAuthProvider()).toBe("custom");
+  });
+
   it("throws for invalid AUTH_PROVIDER value", () => {
     process.env.AUTH_PROVIDER = "okta";
     expect(() => resolveAuthProvider()).toThrow(
-      'Invalid AUTH_PROVIDER="okta". Supported: google, github'
+      'Invalid AUTH_PROVIDER="okta". Supported: google, github, cyberark, custom'
     );
   });
 
