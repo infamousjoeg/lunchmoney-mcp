@@ -37,6 +37,10 @@
     "type": "git",
     "url": "https://github.com/infamousjoeg/lunchmoney-mcp.git"
   },
+  "bugs": {
+    "url": "https://github.com/infamousjoeg/lunchmoney-mcp/issues"
+  },
+  "homepage": "https://github.com/infamousjoeg/lunchmoney-mcp#readme",
   "dependencies": {
     "dotenv": "^17.3.1",
     "env-paths": "^4.0.0",
