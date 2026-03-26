@@ -4,6 +4,13 @@ import { z } from "zod";
 import { LunchMoneyClient } from "./api/client.js";
 import { CredentialStore } from "./credential-store.js";
 import { registerUserTools } from "./tools/user.js";
+import { registerCategoryTools } from "./tools/categories.js";
+import { registerTagTools } from "./tools/tags.js";
+import { registerTransactionTools } from "./tools/transactions.js";
+import { registerRecurringTools } from "./tools/recurring.js";
+import { registerBudgetTools } from "./tools/budgets.js";
+import { registerAssetTools } from "./tools/assets.js";
+import { registerPlaidTools } from "./tools/plaid.js";
 import { formatErrorForMCP } from "./utils/errors.js";
 import type { User } from "./types/index.js";
 
@@ -71,6 +78,13 @@ export async function createServer(): Promise<FastMCP> {
   if (token) {
     const client = new LunchMoneyClient(token);
     registerUserTools(server, client);
+    registerCategoryTools(server, client);
+    registerTagTools(server, client);
+    registerTransactionTools(server, client);
+    registerRecurringTools(server, client);
+    registerBudgetTools(server, client);
+    registerAssetTools(server, client);
+    registerPlaidTools(server, client);
   } else {
     // Register a stub getUser tool that tells the user to configure their token
     server.addTool({
