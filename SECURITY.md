@@ -56,4 +56,4 @@ For containerized deployments (Docker, Kubernetes) where no OS keychain is avail
 
 ## Reporting Vulnerabilities
 
-If you discover a security vulnerability, please email joe@joe-garcia.com instead of opening a public issue.
+If you discover a security vulnerability, please email joe at joe-garcia dot com instead of opening a public issue.
