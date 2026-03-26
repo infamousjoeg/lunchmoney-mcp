@@ -300,51 +300,22 @@
 ═══════════════════════════════════════════════════════════ -->
 <section class="quickstart" id="quickstart" aria-labelledby="quickstart-heading">
   <div class="container">
+    <header class="reveal">
+      <span class="section-label" aria-hidden="true">Quick Start</span>
+      <h2 class="section-heading" id="quickstart-heading">Up and running in under a minute</h2>
+      <p class="section-subheading">No config files. No environment variables to juggle. The token goes straight to your OS keychain.</p>
+    </header>
+
     <div class="quickstart__layout">
 
-      <!-- Left: steps -->
-      <div>
-        <header class="reveal">
-          <span class="section-label" aria-hidden="true">Quick Start</span>
-          <h2 class="section-heading" id="quickstart-heading">Up and running in under a minute</h2>
-          <p class="section-subheading">No config files. No environment variables to juggle. The token goes straight to your OS keychain.</p>
-        </header>
-
-        <div class="quickstart__steps" style="margin-top: 2rem;">
-          <div class="qs-step reveal reveal-delay-1">
-            <div class="qs-step__num" aria-hidden="true">1</div>
-            <div class="qs-step__content">
-              <h3>Install the package</h3>
-              <p>Global install via npm or run with npx without installing.</p>
-            </div>
-          </div>
-          <div class="qs-step reveal reveal-delay-2">
-            <div class="qs-step__num" aria-hidden="true">2</div>
-            <div class="qs-step__content">
-              <h3>Run setup</h3>
-              <p>Paste your Lunch Money API token when prompted. It's validated and stored securely.</p>
-            </div>
-          </div>
-          <div class="qs-step reveal reveal-delay-3">
-            <div class="qs-step__num" aria-hidden="true">3</div>
-            <div class="qs-step__content">
-              <h3>Add to your MCP client</h3>
-              <p>Configure Claude Desktop, Cursor, or any MCP client with the command below.</p>
-            </div>
-          </div>
-          <div class="qs-step reveal reveal-delay-4">
-            <div class="qs-step__num" aria-hidden="true">4</div>
-            <div class="qs-step__content">
-              <h3>Ask your AI about your finances</h3>
-              <p>All 37 tools are immediately available in your AI assistant.</p>
-            </div>
+      <div class="qs-pair reveal reveal-delay-1">
+        <div class="qs-step">
+          <div class="qs-step__num" aria-hidden="true">1</div>
+          <div class="qs-step__content">
+            <h3>Install &amp; run setup</h3>
+            <p>Install globally or run with npx. The setup wizard validates your token and stores it in the OS keychain.</p>
           </div>
         </div>
-      </div>
-
-      <!-- Right: code blocks -->
-      <div class="reveal">
-
         <div class="code-block">
           <div class="code-block__header">
             <span class="code-block__lang">bash</span>
@@ -360,7 +331,16 @@
 <span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp setup</pre>
           </div>
         </div>
+      </div>
 
+      <div class="qs-pair reveal reveal-delay-2">
+        <div class="qs-step">
+          <div class="qs-step__num" aria-hidden="true">2</div>
+          <div class="qs-step__content">
+            <h3>Add to your MCP client</h3>
+            <p>Configure Claude Desktop, Cursor, or any MCP client with this config.</p>
+          </div>
+        </div>
         <div class="code-block">
           <div class="code-block__header">
             <span class="code-block__lang">json — claude_desktop_config.json</span>
@@ -379,7 +359,16 @@
 }</pre>
           </div>
         </div>
+      </div>
 
+      <div class="qs-pair reveal reveal-delay-3">
+        <div class="qs-step">
+          <div class="qs-step__num" aria-hidden="true">3</div>
+          <div class="qs-step__content">
+            <h3>Or deploy remotely</h3>
+            <p>Run over HTTP with OAuth for multi-device access via Claude.ai.</p>
+          </div>
+        </div>
         <div class="code-block">
           <div class="code-block__header">
             <span class="code-block__lang">bash — remote / HTTP mode</span>
@@ -398,8 +387,8 @@
     <span class="syn-flag">--oauth</span> github</pre>
           </div>
         </div>
-
       </div>
+
     </div>
   </div>
 </section>

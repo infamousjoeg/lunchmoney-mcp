@@ -741,19 +741,21 @@ ul, ol { list-style: none; }
 }
 
 .quickstart__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin-top: var(--space-12);
+}
+
+.qs-pair {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-12);
+  gap: var(--space-6);
+  align-items: start;
 }
 
 @media (min-width: 900px) {
-  .quickstart__layout { grid-template-columns: 1fr 2fr; gap: var(--space-16); }
-}
-
-.quickstart__steps {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
+  .qs-pair { grid-template-columns: 1fr 2fr; gap: var(--space-8); }
 }
 
 .qs-step {
