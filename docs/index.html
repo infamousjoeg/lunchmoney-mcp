@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The definitive MCP server for Lunch Money. 37 tools, dual transport, 4 OAuth providers, OS keychain security. Manage your finances through any AI assistant.">
+  <meta name="theme-color" content="#141210">
+  <meta property="og:title" content="lunchmoney-mcp — The definitive MCP server for Lunch Money">
+  <meta property="og:description" content="37 tools covering every Lunch Money API endpoint. Dual transport (stdio + HTTP), 4 OAuth providers, OS keychain security.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://infamousjoeg.github.io/lunchmoney-mcp/">
+  <meta name="twitter:card" content="summary">
+  <title>lunchmoney-mcp — The definitive MCP server for Lunch Money</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a href="#main-content" class="sr-only sr-only--focusable">Skip to main content</a>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<header>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="#" class="nav__logo" aria-label="lunchmoney-mcp home">
+          <span class="nav__logo-mark" aria-hidden="true">$</span>
+          lunchmoney-mcp
+        </a>
+
+        <ul class="nav__links" role="list">
+          <li><a href="#features"    class="nav__link">Features</a></li>
+          <li><a href="#quickstart"  class="nav__link">Quick Start</a></li>
+          <li><a href="#tryit"       class="nav__link">Try it</a></li>
+          <li><a href="#tools"       class="nav__link">Tools</a></li>
+          <li><a href="#deployment"  class="nav__link">Deploy</a></li>
+          <li><a href="#security"    class="nav__link">Security</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp"
+             class="nav__github"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="View on GitHub">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+
+          <a href="#quickstart" class="btn btn--primary">Get Started</a>
+
+          <button class="nav__hamburger"
+                  aria-expanded="false"
+                  aria-controls="mobile-menu"
+                  aria-label="Open menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav__mobile" id="mobile-menu" aria-label="Mobile navigation">
+    <a href="#features"    class="nav__link">Features</a>
+    <a href="#quickstart"  class="nav__link">Quick Start</a>
+    <a href="#tryit"       class="nav__link">Try it</a>
+    <a href="#tools"       class="nav__link">Tools</a>
+    <a href="#deployment"  class="nav__link">Deploy</a>
+    <a href="#security"    class="nav__link">Security</a>
+    <a href="https://github.com/infamousjoeg/lunchmoney-mcp" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">
+      View on GitHub
+    </a>
+  </div>
+</header>
+
+<main id="main-content">
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════ -->
+<section class="hero" id="hero" aria-label="Introduction">
+  <div class="container">
+    <div class="hero__inner">
+
+      <!-- Left: Copy -->
+      <div class="hero__copy">
+        <div class="hero__eyebrow">
+          <span class="hero__badge">v0.1.0</span>
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span class="sr-only">Active project</span>
+        </div>
+
+        <h1 class="hero__headline">
+          The <em>definitive</em> MCP server for Lunch Money
+        </h1>
+
+        <p class="hero__sub">
+          Let any MCP-compatible AI assistant manage your finances through
+          Lunch Money's full API. Local or remote, secure by default.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#quickstart" class="btn btn--primary btn--lg">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Get Started
+          </a>
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp"
+             class="btn btn--outline btn--lg"
+             target="_blank"
+             rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            View on GitHub
+          </a>
+        </div>
+
+        <!-- Stats ribbon -->
+        <div class="stats-ribbon" role="list" aria-label="Project statistics">
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">37</span>
+            <span class="stat-label">Tools</span>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">4</span>
+            <span class="stat-label">OAuth Providers</span>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">5</span>
+            <span class="stat-label">Deploy Targets</span>
+          </div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">278</span>
+            <span class="stat-label">Tests</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Terminal -->
+      <div class="hero__terminal">
+        <div class="terminal" role="region" aria-label="Terminal demonstration">
+          <div class="terminal__titlebar" aria-hidden="true">
+            <span class="terminal__dot terminal__dot--red"></span>
+            <span class="terminal__dot terminal__dot--amber"></span>
+            <span class="terminal__dot terminal__dot--green"></span>
+            <span class="terminal__title">lunchmoney-mcp — zsh</span>
+          </div>
+          <div class="terminal__body" aria-live="polite" aria-label="Terminal output">
+            <!-- JS fills this in -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     WHY THIS EXISTS
+═══════════════════════════════════════════════════════════ -->
+<section class="why" id="why" aria-labelledby="why-heading">
+  <div class="container">
+    <div class="why__inner reveal">
+      <div>
+        <span class="why__label">Why we built this</span>
+        <h2 class="why__heading" id="why-heading">Checking your finances shouldn't require opening an app.</h2>
+      </div>
+      <div class="why__body">
+        <blockquote class="why__pull">
+          "What did I spend on food last month?" One question. Your AI should just answer it.
+        </blockquote>
+        <p>
+          Lunch Money is the best personal finance tool for people who care about their data.
+          But switching contexts — closing your editor, opening a browser, clicking through dashboards —
+          <strong>breaks the flow that makes deep work possible.</strong>
+        </p>
+        <p>
+          lunchmoney-mcp puts your complete financial picture inside any MCP-compatible AI assistant.
+          Ask natural questions. Get real answers. The AI handles the API calls, the filtering, the math.
+          <strong>You stay in flow.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FEATURES
+═══════════════════════════════════════════════════════════ -->
+<section class="features" id="features" aria-labelledby="features-heading">
+  <div class="container">
+    <header class="features__header reveal">
+      <span class="section-label" aria-hidden="true">Why lunchmoney-mcp</span>
+      <h2 class="section-heading" id="features-heading">Everything the API offers, nothing you don't need</h2>
+      <p class="section-subheading">
+        Built for real-world use. Secure by design, tested exhaustively, deployable anywhere.
+      </p>
+    </header>
+
+    <div class="features__grid">
+
+      <article class="feature-card feature-card--featured reveal reveal-delay-1">
+        <div class="feature-card__icon" aria-hidden="true">37</div>
+        <h3 class="feature-card__title">Full API Coverage</h3>
+        <p class="feature-card__desc">
+          Every Lunch Money API endpoint is represented: transactions, budgets,
+          categories, tags, recurring items, assets, and Plaid accounts.
+          Zero endpoints skipped — if Lunch Money can do it, so can your AI.
+        </p>
+        <span class="feature-card__meta">0 endpoints skipped</span>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-2">
+        <div class="feature-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Dual Transport</h3>
+        <p class="feature-card__desc">
+          Run locally over <strong>stdio</strong> for Claude Desktop and similar
+          clients, or serve over <strong>HTTP/SSE</strong> as a remote MCP endpoint
+          for multi-user and cloud deployments.
+        </p>
+        <span class="feature-card__meta">stdio + HTTP/SSE</span>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-3">
+        <div class="feature-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.75"/>
+            <path d="M10 6v4l3 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">4 OAuth Providers</h3>
+        <p class="feature-card__desc">
+          Authenticate the remote server with Google, GitHub, CyberArk Identity,
+          or any custom OIDC-compliant provider. Zero custom auth code needed.
+        </p>
+        <span class="feature-card__meta">Google · GitHub · CyberArk · Custom OIDC</span>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-4">
+        <div class="feature-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.75"/>
+            <path d="M7 9V6a3 3 0 016 0v3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Two-Tier Security</h3>
+        <p class="feature-card__desc">
+          API tokens live in the OS keychain (macOS, GNOME, Windows). Session data
+          is encrypted with AES-256-GCM at rest, with the key stored in that same keychain.
+        </p>
+        <span class="feature-card__meta">Keychain + AES-256-GCM</span>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-5">
+        <div class="feature-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4 14L4 6M8 14V10M12 14V8M16 14V4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">5 Deployment Targets</h3>
+        <p class="feature-card__desc">
+          Ship it your way: Docker container, systemd service, Railway one-click,
+          Render.com, or Fly.io. Every path is documented with working configs.
+        </p>
+        <span class="feature-card__meta">Docker · systemd · Railway · Render · Fly.io</span>
+      </article>
+
+      <article class="feature-card reveal reveal-delay-6">
+        <div class="feature-card__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 10l4 4 7-7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">278 Tests, &gt;90% Coverage</h3>
+        <p class="feature-card__desc">
+          Table-driven tests using Vitest. Every tool, every error path, every
+          edge case is exercised before it ships.
+        </p>
+        <span class="feature-card__meta">&gt;90% line coverage</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     QUICK START
+═══════════════════════════════════════════════════════════ -->
+<section class="quickstart" id="quickstart" aria-labelledby="quickstart-heading">
+  <div class="container">
+    <div class="quickstart__layout">
+
+      <!-- Left: steps -->
+      <div>
+        <header class="reveal">
+          <span class="section-label" aria-hidden="true">Quick Start</span>
+          <h2 class="section-heading" id="quickstart-heading">Up and running in under a minute</h2>
+          <p class="section-subheading">No config files. No environment variables to juggle. The token goes straight to your OS keychain.</p>
+        </header>
+
+        <div class="quickstart__steps" style="margin-top: 2rem;">
+          <div class="qs-step reveal reveal-delay-1">
+            <div class="qs-step__num" aria-hidden="true">1</div>
+            <div class="qs-step__content">
+              <h3>Install the package</h3>
+              <p>Global install via npm or run with npx without installing.</p>
+            </div>
+          </div>
+          <div class="qs-step reveal reveal-delay-2">
+            <div class="qs-step__num" aria-hidden="true">2</div>
+            <div class="qs-step__content">
+              <h3>Run setup</h3>
+              <p>Paste your Lunch Money API token when prompted. It's validated and stored securely.</p>
+            </div>
+          </div>
+          <div class="qs-step reveal reveal-delay-3">
+            <div class="qs-step__num" aria-hidden="true">3</div>
+            <div class="qs-step__content">
+              <h3>Add to your MCP client</h3>
+              <p>Configure Claude Desktop, Cursor, or any MCP client with the command below.</p>
+            </div>
+          </div>
+          <div class="qs-step reveal reveal-delay-4">
+            <div class="qs-step__num" aria-hidden="true">4</div>
+            <div class="qs-step__content">
+              <h3>Ask your AI about your finances</h3>
+              <p>All 37 tools are immediately available in your AI assistant.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: code blocks -->
+      <div class="reveal">
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">bash</span>
+            <button class="copy-btn" data-target="code-install" aria-label="Copy install command">
+              <span aria-hidden="true">⎘</span> Copy
+            </button>
+          </div>
+          <div class="code-block__body">
+            <pre id="code-install"><span class="syn-comment"># Install globally (optional)</span>
+<span class="syn-prompt">$</span> npm install -g @infamousjoeg/lunchmoney-mcp
+
+<span class="syn-comment"># Or run directly with npx</span>
+<span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp setup</pre>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">json — claude_desktop_config.json</span>
+            <button class="copy-btn" data-target="code-claude" aria-label="Copy Claude Desktop config">
+              <span aria-hidden="true">⎘</span> Copy
+            </button>
+          </div>
+          <div class="code-block__body">
+            <pre id="code-claude">{
+  <span class="syn-keyword">"mcpServers"</span>: {
+    <span class="syn-keyword">"lunchmoney"</span>: {
+      <span class="syn-keyword">"command"</span>: <span class="syn-string">"npx"</span>,
+      <span class="syn-keyword">"args"</span>: [<span class="syn-string">"@infamousjoeg/lunchmoney-mcp"</span>]
+    }
+  }
+}</pre>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">bash — remote / HTTP mode</span>
+            <button class="copy-btn" data-target="code-remote" aria-label="Copy remote mode command">
+              <span aria-hidden="true">⎘</span> Copy
+            </button>
+          </div>
+          <div class="code-block__body">
+            <pre id="code-remote"><span class="syn-comment"># Start the HTTP server (default port 3000)</span>
+<span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp <span class="syn-flag">--transport</span> http
+
+<span class="syn-comment"># With a specific port and OAuth provider</span>
+<span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp \
+    <span class="syn-flag">--transport</span> http \
+    <span class="syn-flag">--port</span> <span class="syn-number">8080</span> \
+    <span class="syn-flag">--oauth</span> github</pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     TRY IT — interactive tool call showcase
+═══════════════════════════════════════════════════════════ -->
+<section class="tryit" id="tryit" aria-labelledby="tryit-heading">
+  <div class="container">
+    <header class="tryit__header reveal">
+      <span class="section-label" aria-hidden="true">See it in action</span>
+      <h2 class="section-heading" id="tryit-heading">What a tool call looks like</h2>
+      <p class="section-subheading">
+        Select a scenario to see the exact MCP call your AI makes — and what comes back.
+        Every field, every parameter, validated before it hits the network.
+      </p>
+    </header>
+
+    <div class="tryit__layout reveal reveal-delay-1">
+
+      <!-- Scenario selector -->
+      <div class="tryit__scenarios" role="tablist" aria-label="Try-it scenarios">
+
+        <button class="scenario-btn active" role="tab" aria-selected="true" tabindex="0"
+                id="tab-scenario-txns" aria-controls="scenario-txns"
+                data-scenario="scenario-txns">
+          <span class="scenario-btn__title">Show last month's spending</span>
+          <span class="scenario-btn__desc">getTransactions with date range + debit filter</span>
+        </button>
+
+        <button class="scenario-btn" role="tab" aria-selected="false" tabindex="-1"
+                id="tab-scenario-budget" aria-controls="scenario-budget"
+                data-scenario="scenario-budget">
+          <span class="scenario-btn__title">Check grocery budget</span>
+          <span class="scenario-btn__desc">getBudgets → filter by category name</span>
+        </button>
+
+        <button class="scenario-btn" role="tab" aria-selected="false" tabindex="-1"
+                id="tab-scenario-recurring" aria-controls="scenario-recurring"
+                data-scenario="scenario-recurring">
+          <span class="scenario-btn__title">List upcoming subscriptions</span>
+          <span class="scenario-btn__desc">getRecurringItems sorted by next billing date</span>
+        </button>
+
+        <button class="scenario-btn" role="tab" aria-selected="false" tabindex="-1"
+                id="tab-scenario-create" aria-controls="scenario-create"
+                data-scenario="scenario-create">
+          <span class="scenario-btn__title">Log a new expense</span>
+          <span class="scenario-btn__desc">createTransaction with payee, amount, category</span>
+        </button>
+
+      </div>
+
+      <!-- Output panel -->
+      <div class="tryit__output" role="region" aria-live="polite" aria-label="Tool call output">
+        <div class="tryit__output-header" aria-hidden="true">
+          <span class="tryit__output-dot"></span>
+          <span class="tryit__output-label">MCP tool call → response</span>
+        </div>
+
+        <!-- Scenario: getTransactions -->
+        <div class="tryit__scenario active" id="scenario-txns"
+             role="tabpanel" aria-labelledby="tab-scenario-txns">
+          <div class="tryit__call">
+            <span class="tryit__call-label">Tool call</span>
+<pre>getTransactions({
+  <span class="tryit__param">start_date</span>: <span class="tryit__value">"2026-02-01"</span>,
+  <span class="tryit__param">end_date</span>:   <span class="tryit__value">"2026-02-28"</span>,
+  <span class="tryit__param">is_income</span>: <span class="tryit__bool">false</span>
+})</pre>
+          </div>
+          <div class="tryit__response">
+            <span class="tryit__response-label">Response</span>
+<pre>[
+  {
+    <span class="tryit__key">"id"</span>: <span class="tryit__num">9241</span>, <span class="tryit__key">"date"</span>: <span class="tryit__value">"2026-02-14"</span>,
+    <span class="tryit__key">"payee"</span>: <span class="tryit__value">"Whole Foods Market"</span>,
+    <span class="tryit__key">"amount"</span>: <span class="tryit__value">"-84.37"</span>,
+    <span class="tryit__key">"category"</span>: <span class="tryit__value">"Groceries"</span>
+  },
+  <span class="t-muted">... 47 more transactions</span>
+]</pre>
+          </div>
+        </div>
+
+        <!-- Scenario: getBudgets -->
+        <div class="tryit__scenario" id="scenario-budget"
+             role="tabpanel" aria-labelledby="tab-scenario-budget">
+          <div class="tryit__call">
+            <span class="tryit__call-label">Tool call</span>
+<pre>getBudgets({
+  <span class="tryit__param">start_date</span>: <span class="tryit__value">"2026-03-01"</span>,
+  <span class="tryit__param">end_date</span>:   <span class="tryit__value">"2026-03-31"</span>
+})</pre>
+          </div>
+          <div class="tryit__response">
+            <span class="tryit__response-label">Response (filtered)</span>
+<pre>{
+  <span class="tryit__key">"category"</span>: <span class="tryit__value">"Groceries"</span>,
+  <span class="tryit__key">"budget_amount"</span>: <span class="tryit__num">400.00</span>,
+  <span class="tryit__key">"spent_amount"</span>:  <span class="tryit__num">218.45</span>,
+  <span class="tryit__key">"remaining"</span>:     <span class="tryit__num">181.55</span>,
+  <span class="tryit__key">"pct_used"</span>:      <span class="tryit__value">"54.6%"</span>
+}</pre>
+          </div>
+        </div>
+
+        <!-- Scenario: getRecurringItems -->
+        <div class="tryit__scenario" id="scenario-recurring"
+             role="tabpanel" aria-labelledby="tab-scenario-recurring">
+          <div class="tryit__call">
+            <span class="tryit__call-label">Tool call</span>
+<pre>getRecurringItems({
+  <span class="tryit__param">start_date</span>: <span class="tryit__value">"2026-03-26"</span>
+})</pre>
+          </div>
+          <div class="tryit__response">
+            <span class="tryit__response-label">Response</span>
+<pre>[
+  {
+    <span class="tryit__key">"payee"</span>: <span class="tryit__value">"Netflix"</span>,
+    <span class="tryit__key">"amount"</span>: <span class="tryit__value">"-22.99"</span>,
+    <span class="tryit__key">"cadence"</span>: <span class="tryit__value">"monthly"</span>,
+    <span class="tryit__key">"next_billing"</span>: <span class="tryit__value">"2026-04-01"</span>
+  },
+  {
+    <span class="tryit__key">"payee"</span>: <span class="tryit__value">"GitHub Pro"</span>,
+    <span class="tryit__key">"amount"</span>: <span class="tryit__value">"-4.00"</span>,
+    <span class="tryit__key">"cadence"</span>: <span class="tryit__value">"monthly"</span>,
+    <span class="tryit__key">"next_billing"</span>: <span class="tryit__value">"2026-04-05"</span>
+  }
+]</pre>
+          </div>
+        </div>
+
+        <!-- Scenario: createTransaction -->
+        <div class="tryit__scenario" id="scenario-create"
+             role="tabpanel" aria-labelledby="tab-scenario-create">
+          <div class="tryit__call">
+            <span class="tryit__call-label">Tool call</span>
+<pre>createTransaction({
+  <span class="tryit__param">date</span>:     <span class="tryit__value">"2026-03-26"</span>,
+  <span class="tryit__param">payee</span>:    <span class="tryit__value">"Blue Bottle Coffee"</span>,
+  <span class="tryit__param">amount</span>:   <span class="tryit__num">7.50</span>,
+  <span class="tryit__param">category</span>: <span class="tryit__value">"Coffee &amp; Dining"</span>,
+  <span class="tryit__param">notes</span>:    <span class="tryit__value">"Cortado"</span>
+})</pre>
+          </div>
+          <div class="tryit__response">
+            <span class="tryit__response-label">Response</span>
+<pre>{
+  <span class="tryit__key">"ids"</span>: [<span class="tryit__num">9318</span>],
+  <span class="tryit__key">"status"</span>: <span class="tryit__value">"ok"</span>
+}</pre>
+          </div>
+        </div>
+
+      </div><!-- /.tryit__output -->
+    </div><!-- /.tryit__layout -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOOLS REFERENCE
+═══════════════════════════════════════════════════════════ -->
+<section class="tools" id="tools" aria-labelledby="tools-heading">
+  <div class="container">
+    <header class="tools__header reveal">
+      <span class="section-label" aria-hidden="true">Tools Reference</span>
+      <h2 class="section-heading" id="tools-heading">37 tools across 9 categories</h2>
+      <p class="section-subheading">
+        Every tool maps directly to a Lunch Money API operation.
+        Input validation is enforced with Zod schemas before any network call.
+      </p>
+      <div class="tools__total-counter" aria-label="37 total tools">
+        <strong id="tools-counter" data-target="37">37</strong>
+        <span>tools, zero endpoints skipped</span>
+      </div>
+    </header>
+
+    <!-- Tab list — --tool-fill drives the relative count bar at tab bottom -->
+    <div class="tools__tabs" role="tablist" aria-label="Tool categories">
+      <button class="tool-tab active" id="tab-setup" role="tab" data-panel="panel-setup" aria-selected="true" tabindex="0" aria-controls="panel-setup" style="--tool-fill:10%">Setup <span class="tool-tab__count">1</span></button>
+      <button class="tool-tab" id="tab-user" role="tab" data-panel="panel-user" aria-selected="false" tabindex="-1" aria-controls="panel-user" style="--tool-fill:10%">User <span class="tool-tab__count">1</span></button>
+      <button class="tool-tab" id="tab-categories" role="tab" data-panel="panel-categories" aria-selected="false" tabindex="-1" aria-controls="panel-categories" style="--tool-fill:70%">Categories <span class="tool-tab__count">7</span></button>
+      <button class="tool-tab" id="tab-tags" role="tab" data-panel="panel-tags" aria-selected="false" tabindex="-1" aria-controls="panel-tags" style="--tool-fill:40%">Tags <span class="tool-tab__count">4</span></button>
+      <button class="tool-tab" id="tab-transactions" role="tab" data-panel="panel-transactions" aria-selected="false" tabindex="-1" aria-controls="panel-transactions" style="--tool-fill:100%">Transactions <span class="tool-tab__count">10</span></button>
+      <button class="tool-tab" id="tab-recurring" role="tab" data-panel="panel-recurring" aria-selected="false" tabindex="-1" aria-controls="panel-recurring" style="--tool-fill:40%">Recurring <span class="tool-tab__count">4</span></button>
+      <button class="tool-tab" id="tab-budgets" role="tab" data-panel="panel-budgets" aria-selected="false" tabindex="-1" aria-controls="panel-budgets" style="--tool-fill:40%">Budgets <span class="tool-tab__count">4</span></button>
+      <button class="tool-tab" id="tab-assets" role="tab" data-panel="panel-assets" aria-selected="false" tabindex="-1" aria-controls="panel-assets" style="--tool-fill:40%">Assets <span class="tool-tab__count">4</span></button>
+      <button class="tool-tab" id="tab-plaid" role="tab" data-panel="panel-plaid" aria-selected="false" tabindex="-1" aria-controls="panel-plaid" style="--tool-fill:20%">Plaid <span class="tool-tab__count">2</span></button>
+    </div>
+
+    <!-- Panels -->
+    <div id="panel-setup" class="tools__panel active" role="tabpanel" aria-labelledby="tab-setup">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">configureLunchMoneyToken</div>
+            <div class="tool-item__desc">Configure and validate your Lunch Money API token. Stores it securely in the OS keychain on success.</div>
+            <span class="tool-item__param">token: string</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-user" class="tools__panel" role="tabpanel" aria-labelledby="tab-user">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getUser</div>
+            <div class="tool-item__desc">Get account details including email, name, and currency preferences for the authenticated user.</div>
+            <span class="tool-item__param">(no params)</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-categories" class="tools__panel" role="tabpanel" aria-labelledby="tab-categories">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getCategories</div>
+            <div class="tool-item__desc">List all categories including groups and parent categories.</div>
+            <span class="tool-item__param">(no params)</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getCategory</div>
+            <div class="tool-item__desc">Get a single category by ID.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createCategory</div>
+            <div class="tool-item__desc">Create a new spending or income category with optional group assignment.</div>
+            <span class="tool-item__param">name: string, is_income?: boolean, group_id?: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">updateCategory</div>
+            <div class="tool-item__desc">Update an existing category's name, description, or group membership.</div>
+            <span class="tool-item__param">id: number, name?: string, description?: string</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteCategory</div>
+            <div class="tool-item__desc">Delete a category by ID. Returns an error if the category has associated transactions.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createCategoryGroup</div>
+            <div class="tool-item__desc">Create a new category group with optional initial category IDs.</div>
+            <span class="tool-item__param">name: string, category_ids?: number[]</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">addToGroup</div>
+            <div class="tool-item__desc">Add existing categories to a category group by specifying the group ID and category IDs.</div>
+            <span class="tool-item__param">id: number, category_ids: number[]</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-tags" class="tools__panel" role="tabpanel" aria-labelledby="tab-tags">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getTags</div>
+            <div class="tool-item__desc">List all transaction tags for the authenticated account.</div>
+            <span class="tool-item__param">(no params)</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createTag</div>
+            <div class="tool-item__desc">Create a new tag that can be applied to transactions.</div>
+            <span class="tool-item__param">name: string</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">updateTag</div>
+            <div class="tool-item__desc">Update a tag's name by ID.</div>
+            <span class="tool-item__param">id: number, name: string</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteTag</div>
+            <div class="tool-item__desc">Delete a tag by ID. The tag is removed from all associated transactions.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-transactions" class="tools__panel" role="tabpanel" aria-labelledby="tab-transactions">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getTransactions</div>
+            <div class="tool-item__desc">List transactions with filtering by date range, category, tag, account, and more.</div>
+            <span class="tool-item__param">start_date, end_date, category_id?, tag_id?, is_income?</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getTransaction</div>
+            <div class="tool-item__desc">Get a single transaction by ID with full details.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createTransaction</div>
+            <div class="tool-item__desc">Create a new transaction with date, amount, payee, category, and optional notes.</div>
+            <span class="tool-item__param">date, payee, amount, category_id?, notes?</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">updateTransaction</div>
+            <div class="tool-item__desc">Update a transaction's properties including category, tags, notes, and review status.</div>
+            <span class="tool-item__param">id: number, ...patch fields</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteTransaction</div>
+            <div class="tool-item__desc">Delete a transaction by ID. Irreversible — use with confirmation from the user.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">bulkUpdateTransactions</div>
+            <div class="tool-item__desc">Bulk update multiple transactions in a single API call. Accepts an array of transaction IDs and fields to patch.</div>
+            <span class="tool-item__param">ids: number[], ...patch fields</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getTransactionGroup</div>
+            <div class="tool-item__desc">Retrieve a transaction group and its child transactions.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createTransactionGroup</div>
+            <div class="tool-item__desc">Group multiple transactions under a single parent transaction.</div>
+            <span class="tool-item__param">date, payee, transactions: number[]</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteTransactionGroup</div>
+            <div class="tool-item__desc">Delete a transaction group, restoring the individual transactions.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">unsplitTransactions</div>
+            <div class="tool-item__desc">Reverse a split, merging child transactions back into the original parent.</div>
+            <span class="tool-item__param">parent_ids: number[], remove_parents?: boolean</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-recurring" class="tools__panel" role="tabpanel" aria-labelledby="tab-recurring">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getRecurringItems</div>
+            <div class="tool-item__desc">List all recurring expense and income items with their schedules and amounts.</div>
+            <span class="tool-item__param">start_date?: string</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createRecurringItem</div>
+            <div class="tool-item__desc">Create a new recurring item with payee, amount, cadence, and start date.</div>
+            <span class="tool-item__param">payee, amount, cadence, start_date</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">updateRecurringItem</div>
+            <div class="tool-item__desc">Update a recurring item's amount, schedule, or categorization.</div>
+            <span class="tool-item__param">id: number, ...patch fields</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteRecurringItem</div>
+            <div class="tool-item__desc">Delete a recurring item by ID.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-budgets" class="tools__panel" role="tabpanel" aria-labelledby="tab-budgets">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getBudgets</div>
+            <div class="tool-item__desc">List all budgets with their categories, amounts, and spending to date.</div>
+            <span class="tool-item__param">start_date, end_date</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createBudget</div>
+            <div class="tool-item__desc">Create a new budget for a category with a target amount and time period.</div>
+            <span class="tool-item__param">start_date, category_id, amount</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">updateBudget</div>
+            <div class="tool-item__desc">Update a budget's amount or time period.</div>
+            <span class="tool-item__param">start_date, category_id, amount</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteBudget</div>
+            <div class="tool-item__desc">Delete a budget by category and date.</div>
+            <span class="tool-item__param">start_date, category_id</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-assets" class="tools__panel" role="tabpanel" aria-labelledby="tab-assets">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getAssets</div>
+            <div class="tool-item__desc">List all manually-managed assets with their current balances and types.</div>
+            <span class="tool-item__param">(no params)</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">createAsset</div>
+            <div class="tool-item__desc">Create a new manually-managed asset such as real estate, crypto, or a savings account.</div>
+            <span class="tool-item__param">type_name, name, balance, currency?</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">updateAsset</div>
+            <div class="tool-item__desc">Update an asset's balance, name, or type. Use this to manually sync current values.</div>
+            <span class="tool-item__param">id: number, balance?, name?</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">deleteAsset</div>
+            <div class="tool-item__desc">Delete a manually-managed asset by ID.</div>
+            <span class="tool-item__param">id: number</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="panel-plaid" class="tools__panel" role="tabpanel" aria-labelledby="tab-plaid">
+      <ul class="tools__list" role="list">
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">getPlaidAccounts</div>
+            <div class="tool-item__desc">List all Plaid-connected accounts with their current balances and institution details.</div>
+            <span class="tool-item__param">(no params)</span>
+          </div>
+        </li>
+        <li class="tool-item">
+          <span class="tool-item__icon" aria-hidden="true">fn</span>
+          <div>
+            <div class="tool-item__name">fetchPlaidAccounts</div>
+            <div class="tool-item__desc">Trigger a Plaid sync to update balances and pull new transactions for connected accounts.</div>
+            <span class="tool-item__param">start_date?: string</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     DEPLOYMENT
+═══════════════════════════════════════════════════════════ -->
+<section class="deployment" id="deployment" aria-labelledby="deployment-heading">
+  <div class="container">
+    <header class="deployment__header reveal">
+      <span class="section-label" aria-hidden="true">Deployment</span>
+      <h2 class="section-heading" id="deployment-heading">Ship it your way</h2>
+      <p class="section-subheading">
+        Every deployment target ships with a working configuration.
+        The remote HTTP server supports all 4 OAuth providers out of the box.
+      </p>
+    </header>
+
+    <div class="deploy-grid">
+
+      <!-- Docker -->
+      <div class="deploy-card reveal reveal-delay-1">
+        <div class="deploy-card__header">
+          <div class="deploy-card__icon" aria-hidden="true">🐳</div>
+          <div>
+            <div class="deploy-card__title">Docker</div>
+            <div class="deploy-card__subtitle">Containerized, any host</div>
+          </div>
+        </div>
+        <div class="deploy-card__body">
+          <p class="deploy-card__desc">
+            A production-ready Dockerfile is included. Mount a secrets volume or pass credentials via environment variables.
+          </p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="copy-btn" data-target="code-docker" aria-label="Copy Docker command">
+                <span aria-hidden="true">⎘</span> Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+              <pre id="code-docker"><span class="syn-prompt">$</span> docker build -t lunchmoney-mcp .
+<span class="syn-prompt">$</span> docker run -p 3000:3000 \
+    -e LUNCHMONEY_API_TOKEN=<span class="syn-string">your_token</span> \
+    lunchmoney-mcp</pre>
+            </div>
+          </div>
+        </div>
+        <div class="deploy-card__footer">
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp/blob/main/Dockerfile" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">View Dockerfile</a>
+        </div>
+      </div>
+
+      <!-- systemd -->
+      <div class="deploy-card reveal reveal-delay-2">
+        <div class="deploy-card__header">
+          <div class="deploy-card__icon" aria-hidden="true">⚙️</div>
+          <div>
+            <div class="deploy-card__title">systemd</div>
+            <div class="deploy-card__subtitle">Linux service, auto-restart</div>
+          </div>
+        </div>
+        <div class="deploy-card__body">
+          <p class="deploy-card__desc">
+            Run as a persistent system service with automatic restart on failure. Unit file included in the deploy directory.
+          </p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="copy-btn" data-target="code-systemd" aria-label="Copy systemd command">
+                <span aria-hidden="true">⎘</span> Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+              <pre id="code-systemd"><span class="syn-comment"># Copy unit file</span>
+<span class="syn-prompt">$</span> cp deploy/lunchmoney-mcp.service \
+    /etc/systemd/system/
+<span class="syn-prompt">$</span> systemctl enable --now lunchmoney-mcp</pre>
+            </div>
+          </div>
+        </div>
+        <div class="deploy-card__footer">
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp/tree/main/deploy" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">View unit file</a>
+        </div>
+      </div>
+
+      <!-- Railway -->
+      <div class="deploy-card reveal reveal-delay-3">
+        <div class="deploy-card__header">
+          <div class="deploy-card__icon" aria-hidden="true">🚂</div>
+          <div>
+            <div class="deploy-card__title">Railway</div>
+            <div class="deploy-card__subtitle">One-click, free tier available</div>
+          </div>
+        </div>
+        <div class="deploy-card__body">
+          <p class="deploy-card__desc">
+            Click to deploy directly from GitHub. Railway detects the Dockerfile automatically. Add your token in the environment variables tab.
+          </p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-block__header">
+              <span class="code-block__lang">json — railway.json</span>
+            </div>
+            <div class="code-block__body">
+              <pre>{
+  <span class="syn-keyword">"build"</span>: { <span class="syn-keyword">"builder"</span>: <span class="syn-string">"DOCKERFILE"</span> },
+  <span class="syn-keyword">"deploy"</span>: { <span class="syn-keyword">"startCommand"</span>: <span class="syn-string">"node dist/cli.js"</span> }
+}</pre>
+            </div>
+          </div>
+        </div>
+        <div class="deploy-card__footer">
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp/tree/main/deploy" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">View Railway config</a>
+        </div>
+      </div>
+
+      <!-- Render -->
+      <div class="deploy-card reveal reveal-delay-4">
+        <div class="deploy-card__header">
+          <div class="deploy-card__icon" aria-hidden="true">☁️</div>
+          <div>
+            <div class="deploy-card__title">Render</div>
+            <div class="deploy-card__subtitle">Managed web service</div>
+          </div>
+        </div>
+        <div class="deploy-card__body">
+          <p class="deploy-card__desc">
+            A <code>render.yaml</code> is included at the repo root. Connect your GitHub repo and Render picks it up automatically.
+          </p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml — render.yaml (excerpt)</span>
+            </div>
+            <div class="code-block__body">
+              <pre><span class="syn-section">services</span>:
+  - <span class="syn-keyword">type</span>: <span class="syn-string">web</span>
+    <span class="syn-keyword">name</span>: <span class="syn-string">lunchmoney-mcp</span>
+    <span class="syn-keyword">env</span>: <span class="syn-string">docker</span>
+    <span class="syn-keyword">plan</span>: <span class="syn-string">free</span></pre>
+            </div>
+          </div>
+        </div>
+        <div class="deploy-card__footer">
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp/blob/main/render.yaml" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">View render.yaml</a>
+        </div>
+      </div>
+
+      <!-- Fly.io -->
+      <div class="deploy-card reveal reveal-delay-5">
+        <div class="deploy-card__header">
+          <div class="deploy-card__icon" aria-hidden="true">🪁</div>
+          <div>
+            <div class="deploy-card__title">Fly.io</div>
+            <div class="deploy-card__subtitle">Global edge deployment</div>
+          </div>
+        </div>
+        <div class="deploy-card__body">
+          <p class="deploy-card__desc">
+            Deploy close to your users using Fly.io's global network. A <code>fly.toml</code> is included and pre-configured.
+          </p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="copy-btn" data-target="code-fly" aria-label="Copy Fly.io commands">
+                <span aria-hidden="true">⎘</span> Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+              <pre id="code-fly"><span class="syn-prompt">$</span> fly launch --no-deploy
+<span class="syn-prompt">$</span> fly secrets set \
+    LUNCHMONEY_API_TOKEN=<span class="syn-string">your_token</span>
+<span class="syn-prompt">$</span> fly deploy</pre>
+            </div>
+          </div>
+        </div>
+        <div class="deploy-card__footer">
+          <a href="https://github.com/infamousjoeg/lunchmoney-mcp/blob/main/fly.toml" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">View fly.toml</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECURITY
+═══════════════════════════════════════════════════════════ -->
+<section class="security" id="security" aria-labelledby="security-heading">
+  <div class="container">
+    <div class="security__layout">
+
+      <!-- Architecture diagram -->
+      <div class="reveal">
+        <span class="section-label" aria-hidden="true">Security</span>
+        <h2 class="section-heading" id="security-heading">Designed for sensitive data</h2>
+        <p class="section-subheading" style="margin-bottom: 2rem;">
+          Your API token never touches disk unencrypted. Two-tier architecture separates
+          long-lived credentials from short-lived session tokens.
+        </p>
+
+        <div class="sec-diagram" aria-label="Two-tier security architecture diagram">
+
+          <div class="sec-tier sec-tier--primary">
+            <span class="sec-tier__badge">Tier 1 — OS Keychain</span>
+            <h3 class="sec-tier__title">Native Secret Storage</h3>
+            <p class="sec-tier__desc">
+              Platform keychain integration via <code>keytar</code>. Credentials are protected by the OS
+              and require user authentication to access.
+            </p>
+            <div class="sec-tier__items">
+              <span class="sec-tag">macOS Keychain</span>
+              <span class="sec-tag">GNOME Keyring</span>
+              <span class="sec-tag">Windows Credential Manager</span>
+              <span class="sec-tag">API tokens</span>
+              <span class="sec-tag">OAuth credentials</span>
+              <span class="sec-tag">AES-256-GCM key</span>
+            </div>
+          </div>
+
+          <div class="sec-connector" aria-hidden="true">
+            <span class="sec-connector__line"></span>
+            <span>key derived from Tier 1</span>
+            <span class="sec-connector__line"></span>
+          </div>
+
+          <div class="sec-tier">
+            <span class="sec-tier__badge">Tier 2 — Encrypted Disk</span>
+            <h3 class="sec-tier__title">AES-256-GCM Session Store</h3>
+            <p class="sec-tier__desc">
+              Short-lived session tokens are stored on disk encrypted at rest.
+              The encryption key lives exclusively in Tier 1 — compromised disk = no plaintext.
+            </p>
+            <div class="sec-tier__items">
+              <span class="sec-tag">Session tokens</span>
+              <span class="sec-tag">OAuth state</span>
+              <span class="sec-tag">AES-256-GCM encrypted</span>
+              <span class="sec-tag">Authenticated encryption</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Threat model table -->
+      <div class="reveal reveal-delay-2">
+        <h3 class="section-heading" style="font-size: 1.25rem; margin-bottom: 1.5rem;">Threat model</h3>
+        <div class="threat-table-wrap">
+          <table class="threat-table" aria-label="Threat model — threats and mitigations">
+            <thead>
+              <tr>
+                <th scope="col">Threat</th>
+                <th scope="col">Mitigation</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Token exfiltration via disk read</td>
+                <td>Token stored only in OS keychain, never written to disk in plaintext</td>
+                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+              </tr>
+              <tr>
+                <td>Session token theft</td>
+                <td>AES-256-GCM encryption; key in keychain, not adjacent to ciphertext</td>
+                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+              </tr>
+              <tr>
+                <td>Unauthorized remote access</td>
+                <td>OAuth PKCE flow required for HTTP transport; unauthenticated requests rejected</td>
+                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+              </tr>
+              <tr>
+                <td>Token leakage in logs</td>
+                <td>Tokens never included in log output; only masked references used</td>
+                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+              </tr>
+              <tr>
+                <td>Supply chain compromise</td>
+                <td>Minimal production dependencies; audit trail via npm provenance</td>
+                <td><span class="threat-badge threat-badge--design">By design</span></td>
+              </tr>
+              <tr>
+                <td>Privileged keychain access</td>
+                <td>OS-level access controls apply; no elevation of privilege is requested</td>
+                <td><span class="threat-badge threat-badge--design">By design</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div>
+        <div class="footer__brand">@infamousjoeg/lunchmoney-mcp</div>
+        <p class="footer__credit">
+          Built by <a href="https://github.com/infamousjoeg" target="_blank" rel="noopener noreferrer">Joe Garcia</a>.
+          Based on <a href="https://github.com/gijsio/lunch-money-mcp" target="_blank" rel="noopener noreferrer">lunch-money-mcp</a>
+          by Gilbert Pellegrom.
+          Released under the <a href="https://github.com/infamousjoeg/lunchmoney-mcp/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.
+        </p>
+      </div>
+
+      <div class="footer__links">
+        <a href="https://www.npmjs.com/package/@infamousjoeg/lunchmoney-mcp"
+           class="footer__link"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="View on npm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M0 0h24v24H0V0zm6.154 19.846V4.154h11.692v15.692H12V7.846h-2.308v12H6.154z"/>
+          </svg>
+          npm
+        </a>
+
+        <span class="footer__divider" aria-hidden="true">·</span>
+
+        <a href="https://github.com/infamousjoeg/lunchmoney-mcp"
+           class="footer__link"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="View source on GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <span class="footer__divider" aria-hidden="true">·</span>
+
+        <span class="footer__license">MIT</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
