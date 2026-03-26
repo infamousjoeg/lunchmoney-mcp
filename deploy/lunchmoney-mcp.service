@@ -1,0 +1,19 @@
+[Unit]
+Description=Lunch Money MCP Server
+After=network.target
+
+[Service]
+Type=simple
+User=lunchmoney
+Group=lunchmoney
+WorkingDirectory=/opt/lunchmoney-mcp
+ExecStart=/usr/bin/node dist/cli.js --http
+EnvironmentFile=/etc/lunchmoney-mcp/env
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=lunchmoney-mcp
+
+[Install]
+WantedBy=multi-user.target
