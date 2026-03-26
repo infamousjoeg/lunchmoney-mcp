@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { FastMCP, GoogleProvider, GitHubProvider } from "fastmcp";
+import { FastMCP, GoogleProvider, GitHubProvider, OAuthProvider } from "fastmcp";
 import { z } from "zod";
 import { LunchMoneyClient } from "./api/client.js";
 import { CredentialStore } from "./credential-store.js";
@@ -15,7 +15,7 @@ import { formatErrorForMCP } from "./utils/errors.js";
 import type { User } from "./types/index.js";
 
 /** Union type for supported auth provider instances */
-export type AuthProviderInstance = InstanceType<typeof GoogleProvider> | InstanceType<typeof GitHubProvider>;
+export type AuthProviderInstance = InstanceType<typeof GoogleProvider> | InstanceType<typeof GitHubProvider> | InstanceType<typeof OAuthProvider>;
 
 export interface CreateServerOptions {
   /** OAuth auth provider for HTTP transport mode */

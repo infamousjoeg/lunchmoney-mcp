@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: lunchmoney-mcp
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/cli.js --http
+    healthCheckPath: /health
+    envVars:
+      - key: LUNCH_MONEY_API_TOKEN
+        sync: false
+      - key: AUTH_PROVIDER
+        value: google
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: BASE_URL
+        sync: false
+      - key: PORT
+        value: 10000
