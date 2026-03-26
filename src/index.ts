@@ -5,4 +5,6 @@ export { LunchMoneyClient } from "./api/client.js";
 export { runSetupWizard } from "./setup.js";
 export { createAuthProvider, getAuthCredentialsFromEnv } from "./auth-provider.js";
 export type { AuthProviderType, AuthProviderOptions } from "./auth-provider.js";
+export { createSessionStore, getDataDirectory } from "./session-store.js";
+export type { CreateSessionStoreOptions } from "./session-store.js";
 export * from "./types/index.js";
