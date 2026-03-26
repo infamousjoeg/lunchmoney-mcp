@@ -1,7 +1,18 @@
-import { describe, it, expect } from "vitest";
-import { parseArgs } from "../src/cli.js";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { parseArgs, resolveAuthProvider } from "../src/cli.js";
 
 describe("CLI parseArgs", () => {
+  const originalEnv = process.env;
+
+  beforeEach(() => {
+    process.env = { ...originalEnv };
+    delete process.env.PORT;
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
   it("defaults to stdio mode", () => {
     const options = parseArgs(["node", "cli.js"]);
     expect(options.mode).toBe("stdio");
@@ -68,5 +79,69 @@ describe("CLI parseArgs", () => {
     // setup checked before --http
     const options2 = parseArgs(["node", "cli.js", "setup", "--http"]);
     expect(options2.mode).toBe("setup");
+  });
+
+  it("reads port from PORT env var when --port not specified", () => {
+    process.env.PORT = "9090";
+    const options = parseArgs(["node", "cli.js", "--http"]);
+    expect(options.port).toBe(9090);
+  });
+
+  it("--port flag takes priority over PORT env var", () => {
+    process.env.PORT = "9090";
+    const options = parseArgs(["node", "cli.js", "--http", "--port", "3000"]);
+    expect(options.port).toBe(3000);
+  });
+
+  it("ignores invalid PORT env var", () => {
+    process.env.PORT = "not-a-number";
+    const options = parseArgs(["node", "cli.js", "--http"]);
+    expect(options.port).toBe(8080);
+  });
+
+  it("ignores PORT=0 env var", () => {
+    process.env.PORT = "0";
+    const options = parseArgs(["node", "cli.js", "--http"]);
+    expect(options.port).toBe(8080);
+  });
+});
+
+describe("resolveAuthProvider", () => {
+  const originalEnv = process.env;
+
+  beforeEach(() => {
+    process.env = { ...originalEnv };
+    delete process.env.AUTH_PROVIDER;
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it("defaults to google when AUTH_PROVIDER is not set", () => {
+    expect(resolveAuthProvider()).toBe("google");
+  });
+
+  it("returns google when AUTH_PROVIDER=google", () => {
+    process.env.AUTH_PROVIDER = "google";
+    expect(resolveAuthProvider()).toBe("google");
+  });
+
+  it("returns github when AUTH_PROVIDER=github", () => {
+    process.env.AUTH_PROVIDER = "github";
+    expect(resolveAuthProvider()).toBe("github");
+  });
+
+  it("throws for invalid AUTH_PROVIDER value", () => {
+    process.env.AUTH_PROVIDER = "okta";
+    expect(() => resolveAuthProvider()).toThrow(
+      'Invalid AUTH_PROVIDER="okta". Supported: google, github'
+    );
+  });
+
+  it("throws for empty AUTH_PROVIDER (uses default)", () => {
+    // Empty string is falsy, so || "google" applies
+    process.env.AUTH_PROVIDER = "";
+    expect(resolveAuthProvider()).toBe("google");
   });
 });
