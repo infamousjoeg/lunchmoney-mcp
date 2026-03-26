@@ -1,0 +1,54 @@
+{
+  "name": "lunchmoney-mcp",
+  "version": "0.1.0",
+  "description": "The definitive MCP server for Lunch Money — local (stdio) and remote (HTTP) with secure credential storage",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "lunchmoney-mcp": "dist/cli.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "mcp",
+    "lunch-money",
+    "lunchmoney",
+    "finance",
+    "budgeting",
+    "api",
+    "claude",
+    "ai"
+  ],
+  "author": "Joe Garcia <joe@joe-garcia.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infamousjoeg/lunchmoney-mcp.git"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "env-paths": "^4.0.0",
+    "fastmcp": "^3.34.0",
+    "keytar": "^7.9.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "^4.1.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.1"
+  }
+}
