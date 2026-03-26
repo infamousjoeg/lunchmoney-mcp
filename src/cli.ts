@@ -2,6 +2,11 @@
 
 import { createServer, startServer } from "./server.js";
 import { runSetupWizard } from "./setup.js";
+import {
+  createAuthProvider,
+  getAuthCredentialsFromEnv,
+  type AuthProviderType,
+} from "./auth-provider.js";
 import { createRequire } from "module";
 
 export interface CLIOptions {
@@ -35,10 +40,33 @@ export function parseArgs(argv: string[]): CLIOptions {
     }
   }
 
+  // Also check PORT env var if --port not specified on CLI
+  if (portIndex === -1 && process.env.PORT) {
+    const envPort = parseInt(process.env.PORT, 10);
+    if (!isNaN(envPort) && envPort > 0 && envPort <= 65535) {
+      port = envPort;
+    }
+  }
+
   return {
     mode: isHttp ? "http" : "stdio",
     port,
   };
+}
+
+/**
+ * Resolve the auth provider type from the AUTH_PROVIDER env var.
+ * Defaults to 'google' if not set. Throws if invalid.
+ */
+export function resolveAuthProvider(): AuthProviderType {
+  const providerEnv = process.env.AUTH_PROVIDER || "google";
+  const valid: AuthProviderType[] = ["google", "github"];
+  if (!valid.includes(providerEnv as AuthProviderType)) {
+    throw new Error(
+      `Invalid AUTH_PROVIDER="${providerEnv}". Supported: ${valid.join(", ")}`
+    );
+  }
+  return providerEnv as AuthProviderType;
 }
 
 async function main() {
@@ -58,8 +86,20 @@ async function main() {
     }
 
     case "http": {
-      const server = await createServer();
-      await startServer(server, "httpStream", options.port);
+      // HTTP mode requires OAuth
+      const providerType = resolveAuthProvider();
+      const { clientId, clientSecret } = getAuthCredentialsFromEnv(providerType);
+      const baseUrl = process.env.BASE_URL || `http://localhost:${options.port}`;
+
+      const auth = createAuthProvider({
+        provider: providerType,
+        baseUrl,
+        clientId,
+        clientSecret,
+      });
+
+      const server = await createServer({ auth, health: true });
+      await startServer(server, "httpStream", options.port, providerType);
       break;
     }
 

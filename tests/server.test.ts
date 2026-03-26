@@ -154,6 +154,49 @@ describe("Server", () => {
     });
   });
 
+  describe("createServer with options", () => {
+    it("creates server with auth provider option", async () => {
+      mockKeytar.getPassword.mockResolvedValue(null);
+
+      const mockAuth = {
+        authenticate: vi.fn(),
+        getOAuthConfig: vi.fn().mockReturnValue({
+          enabled: true,
+          authorizationServer: {},
+          protectedResource: {
+            authorizationServers: ["http://localhost:8080"],
+            resource: "http://localhost:8080",
+            scopesSupported: [],
+          },
+          proxy: {},
+        }),
+      };
+      const server = await createServer({ auth: mockAuth as never });
+      expect(server).toBeDefined();
+    });
+
+    it("creates server with health enabled", async () => {
+      mockKeytar.getPassword.mockResolvedValue(null);
+
+      const server = await createServer({ health: true });
+      expect(server).toBeDefined();
+    });
+
+    it("creates server with health disabled", async () => {
+      mockKeytar.getPassword.mockResolvedValue(null);
+
+      const server = await createServer({ health: false });
+      expect(server).toBeDefined();
+    });
+
+    it("creates server with no options (defaults)", async () => {
+      mockKeytar.getPassword.mockResolvedValue(null);
+
+      const server = await createServer();
+      expect(server).toBeDefined();
+    });
+  });
+
   describe("startServer", () => {
     it("starts in http mode with specified port", async () => {
       const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
@@ -201,6 +244,47 @@ describe("Server", () => {
       });
       // stdio mode should NOT log to stdout
       expect(consoleSpy).not.toHaveBeenCalled();
+      consoleSpy.mockRestore();
+    });
+
+    it("logs auth provider name in http mode", async () => {
+      const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+      const mockServer = {
+        start: vi.fn(),
+      };
+
+      await startServer(mockServer as never, "httpStream", 8080, "google");
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining("google")
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it("logs health check URL in http mode", async () => {
+      const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+      const mockServer = {
+        start: vi.fn(),
+      };
+
+      await startServer(mockServer as never, "httpStream", 9000);
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining("http://localhost:9000/health")
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it("does not log auth provider when not specified", async () => {
+      const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+      const mockServer = {
+        start: vi.fn(),
+      };
+
+      await startServer(mockServer as never, "httpStream", 8080);
+
+      const calls = consoleSpy.mock.calls.map((c) => c[0]);
+      expect(calls.some((msg: string) => msg.includes("OAuth provider:"))).toBe(false);
       consoleSpy.mockRestore();
     });
   });

@@ -11,6 +11,7 @@ export default defineConfig({
         "src/api/**",
         "src/tools/**",
         "src/utils/**",
+        "src/auth-provider.ts",
         "src/credential-store.ts",
         "src/cli.ts",
         "src/server.ts",
