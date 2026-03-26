@@ -7,6 +7,8 @@ import {
   getAuthCredentialsFromEnv,
   type AuthProviderType,
 } from "./auth-provider.js";
+import { CredentialStore } from "./credential-store.js";
+import { createSessionStore } from "./session-store.js";
 import { createRequire } from "module";
 
 export interface CLIOptions {
@@ -60,7 +62,7 @@ export function parseArgs(argv: string[]): CLIOptions {
  */
 export function resolveAuthProvider(): AuthProviderType {
   const providerEnv = process.env.AUTH_PROVIDER || "google";
-  const valid: AuthProviderType[] = ["google", "github"];
+  const valid: AuthProviderType[] = ["google", "github", "cyberark", "custom"];
   if (!valid.includes(providerEnv as AuthProviderType)) {
     throw new Error(
       `Invalid AUTH_PROVIDER="${providerEnv}". Supported: ${valid.join(", ")}`
@@ -88,14 +90,25 @@ async function main() {
     case "http": {
       // HTTP mode requires OAuth
       const providerType = resolveAuthProvider();
-      const { clientId, clientSecret } = getAuthCredentialsFromEnv(providerType);
+      const envConfig = getAuthCredentialsFromEnv(providerType);
       const baseUrl = process.env.BASE_URL || `http://localhost:${options.port}`;
+
+      // Create encrypted session store for persisting OAuth tokens across restarts
+      const credentialStore = new CredentialStore();
+      const tokenStorage = await createSessionStore(credentialStore);
 
       const auth = createAuthProvider({
         provider: providerType,
         baseUrl,
-        clientId,
-        clientSecret,
+        clientId: envConfig.clientId,
+        clientSecret: envConfig.clientSecret,
+        cyberarkTenantUrl: envConfig.cyberarkTenantUrl,
+        authorizationEndpoint: envConfig.authorizationEndpoint,
+        tokenEndpoint: envConfig.tokenEndpoint,
+        scopes: envConfig.scopes,
+        tokenStorage,
+        // Disable FastMCP's built-in encryption since EncryptedTokenStorage already handles it
+        encryptionKey: false,
       });
 
       const server = await createServer({ auth, health: true });
