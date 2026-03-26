@@ -1,0 +1,106 @@
+import "dotenv/config";
+import { FastMCP } from "fastmcp";
+import { z } from "zod";
+import { LunchMoneyClient } from "./api/client.js";
+import { CredentialStore } from "./credential-store.js";
+import { registerUserTools } from "./tools/user.js";
+import { formatErrorForMCP } from "./utils/errors.js";
+import type { User } from "./types/index.js";
+
+export const TOKEN_NOT_CONFIGURED_MSG =
+  "Lunch Money API token not configured. Use the configureLunchMoneyToken tool to set your token, or run: npx lunchmoney-mcp setup";
+
+/**
+ * Execute logic for the configureLunchMoneyToken tool.
+ * Exported for testing.
+ */
+export async function executeConfigureToken(
+  args: { token: string },
+  credentialStore: CredentialStore
+): Promise<string> {
+  try {
+    // Validate the token by calling GET /me
+    const testClient = new LunchMoneyClient(args.token);
+    const user = await testClient.get<User>("/me");
+
+    // Token is valid — store it
+    await credentialStore.setApiToken(args.token);
+
+    return `Token validated and stored successfully! Welcome, ${user.name} (${user.email}). Restart the MCP server to use the new token.`;
+  } catch (error) {
+    if (error instanceof Error && error.message === "Lunch Money API token is required") {
+      return "Error: Token cannot be empty.";
+    }
+    return `Failed to validate token: ${formatErrorForMCP(error)}. Please check your token and try again. Get a token at https://my.lunchmoney.app/developers`;
+  }
+}
+
+/**
+ * Execute logic for the stub getUser tool (when no token is configured).
+ * Exported for testing.
+ */
+export async function executeStubGetUser(): Promise<string> {
+  return TOKEN_NOT_CONFIGURED_MSG;
+}
+
+export async function createServer(): Promise<FastMCP> {
+  const credentialStore = new CredentialStore();
+  const token = await credentialStore.getApiToken();
+
+  const server = new FastMCP({
+    name: "Lunch Money MCP",
+    version: "0.1.0",
+    instructions:
+      "This MCP server provides full integration with the Lunch Money API. " +
+      "You can manage user accounts, categories, tags, transactions, recurring items, budgets, and assets. " +
+      "All operations support full CRUD capabilities with proper validation.",
+  });
+
+  // Register the configureLunchMoneyToken tool — works without a token
+  server.addTool({
+    name: "configureLunchMoneyToken",
+    description:
+      "Configure your Lunch Money API token. Validates the token by checking your account, then stores it securely in the system keychain.",
+    parameters: z.object({
+      token: z.string().min(1, "API token is required"),
+    }),
+    execute: async (args) => executeConfigureToken(args, credentialStore),
+  });
+
+  // Only register API tools if we have a token
+  if (token) {
+    const client = new LunchMoneyClient(token);
+    registerUserTools(server, client);
+  } else {
+    // Register a stub getUser tool that tells the user to configure their token
+    server.addTool({
+      name: "getUser",
+      description: "Get the current user's account details (requires API token to be configured)",
+      parameters: z.object({}),
+      execute: executeStubGetUser,
+    });
+  }
+
+  return server;
+}
+
+export async function startServer(
+  server: FastMCP,
+  transportType: "stdio" | "httpStream",
+  port?: number
+): Promise<void> {
+  if (transportType === "httpStream") {
+    server.start({
+      transportType: "httpStream",
+      httpStream: {
+        port: port || 8080,
+      },
+    });
+    console.log(`Lunch Money MCP server started on port ${port || 8080} (HTTP)`);
+  } else {
+    server.start({
+      transportType: "stdio",
+    });
+    // Don't log to stdout in stdio mode — it would interfere with the protocol
+  }
+}
