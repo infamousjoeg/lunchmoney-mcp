@@ -412,6 +412,23 @@ function initToolsCounter() {
 }
 
 /* ── Init ────────────────────────────────────────────────── */
+/* ── Dynamic version badge from npm registry ────────────── */
+function initVersionBadge() {
+  const badge = $('#version-badge');
+  if (!badge) return;
+
+  fetch('https://registry.npmjs.org/@infamousjoeg%2Flunchmoney-mcp/latest')
+    .then(res => res.ok ? res.json() : null)
+    .then(data => {
+      if (data && data.version) {
+        badge.textContent = 'v' + data.version;
+      }
+    })
+    .catch(() => {
+      // Fail silently — keep the hardcoded fallback version
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initTerminal();
@@ -421,4 +438,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initTryIt();
   initSmoothScroll();
   initToolsCounter();
+  initVersionBadge();
 });
