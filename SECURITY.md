@@ -54,6 +54,59 @@ For containerized deployments (Docker, Kubernetes) where no OS keychain is avail
 | Man-in-the-middle on API calls | All API calls use HTTPS; OAuth uses PKCE |
 | Unauthorized MCP access (HTTP mode) | OAuth 2.1 with PKCE required for all authenticated endpoints |
 
+## Supply Chain Security
+
+MCP servers are high-value targets — they sit between AI assistants and your data. A compromised dependency could turn this server into a data exfiltration tool. We take this seriously.
+
+### What We Do
+
+| Protection | How |
+|-----------|-----|
+| **Pinned dependencies** | All versions in `package.json` are exact (no `^` or `~`). A compromised new release won't auto-install. |
+| **Lockfile integrity** | `package-lock.json` is committed and CI uses `npm ci` (not `npm install`), ensuring the exact dependency tree is reproduced. |
+| **npm provenance** | Every release is published with `--provenance` from GitHub Actions, creating a cryptographic attestation linking the npm package to its source commit. Verify with `npm audit signatures`. |
+| **Automated vulnerability scanning** | `npm audit --audit-level=high` runs on every CI build. Known vulnerabilities block merges. |
+| **Signature verification** | `npm audit signatures` runs in CI to verify all installed packages have valid registry signatures. |
+| **Dependabot** | GitHub Dependabot monitors for vulnerable dependencies and opens PRs weekly. Major version bumps require manual review. |
+| **Minimal dependency surface** | Only 5 production dependencies. Dev dependencies (vitest, typescript, etc.) are not shipped in the npm package. |
+| **GitHub Actions pinned** | CI workflow actions are pinned to specific versions and monitored by Dependabot. |
+
+### What You Can Do
+
+**Verify provenance** of any installed version:
+```bash
+npm audit signatures
+```
+
+**Verify the package source** matches the GitHub repo:
+```bash
+# Check provenance attestation on npm
+npm view @infamousjoeg/lunchmoney-mcp --json | jq '.dist.attestations'
+```
+
+**Pin your install** to a specific version:
+```bash
+npm install -g @infamousjoeg/lunchmoney-mcp@0.1.0
+```
+
+**Audit before running:**
+```bash
+npx @infamousjoeg/lunchmoney-mcp --version  # check version
+npm audit                                    # check for known vulnerabilities
+```
+
+### Production Dependencies (5 total)
+
+| Package | Purpose | Why We Trust It |
+|---------|---------|----------------|
+| `fastmcp` | MCP protocol framework | Active development, MCP ecosystem standard |
+| `zod` | Input validation | 25k+ GitHub stars, widely audited |
+| `keytar` | OS keychain access | Maintained by Atom/GitHub team, native binding |
+| `dotenv` | ENV file parsing | 30M+ weekly downloads, minimal surface area |
+| `env-paths` | Platform data dirs | Zero dependencies, 50 lines of code |
+
+Dev dependencies (`vitest`, `typescript`, `tsx`, `@types/node`, `@vitest/coverage-v8`) are NOT included in the published npm package — they are excluded via the `files` field in `package.json`.
+
 ## Reporting Vulnerabilities
 
 If you discover a security vulnerability, please email joe at joe-garcia dot com instead of opening a public issue.
