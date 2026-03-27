@@ -1327,6 +1327,101 @@ ul, ol { list-style: none; }
   background: var(--amber-subtle);
 }
 
+/* ── Supply Chain Security subsection ─────────────────────── */
+.sc-section {
+  grid-column: 1 / -1; /* span full width of security__layout */
+  border-top: 1px solid var(--border-strong);
+  padding-top: var(--space-12);
+}
+
+.sc-section__header {
+  margin-bottom: var(--space-8);
+}
+
+.sc-section__intro {
+  margin-top: var(--space-4);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  max-width: 62ch;
+  line-height: 1.65;
+}
+
+.sc-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+/* Protection items grid */
+.sc-protections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .sc-protections { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 900px) {
+  .sc-protections { grid-template-columns: repeat(3, 1fr); }
+}
+
+.sc-protection-item {
+  display: flex;
+  gap: var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--space-4);
+}
+
+.sc-protection-item__icon {
+  font-size: 1.125rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sc-protection-item strong {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.sc-protection-item p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.sc-protection-item code {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  background: var(--bg-overlay);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--amber-bright);
+}
+
+/* Deps table heading */
+.sc-deps__heading,
+.sc-verify__heading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+/* Verify block — no extra copy-btn needed, keep it simple */
+.sc-verify .code-block { margin-bottom: 0; }
+
 /* ── Footer — inverted amber tint, gives page visual bookend ── */
 .footer {
   /* Warm amber-tinted background — bookends the dark hero */

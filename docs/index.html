@@ -289,6 +289,7 @@
           edge case is exercised before it ships.
         </p>
         <span class="feature-card__meta">&gt;90% line coverage</span>
+        <span class="badge badge--amber" style="margin-top: var(--space-3);">supply chain hardened</span>
       </article>
 
     </div>
@@ -1214,6 +1215,134 @@
       </div>
 
     </div>
+
+    <!-- Supply Chain Security -->
+    <div class="sc-section reveal">
+      <div class="sc-section__header">
+        <h3 class="sec-tier__badge">Supply Chain Security</h3>
+        <p class="sc-section__intro">
+          MCP servers sit between AI and your data. A compromised dependency could turn this into a data exfiltration tool. We take this seriously.
+        </p>
+      </div>
+
+      <div class="sc-section__body">
+
+        <!-- Protections grid -->
+        <div class="sc-protections" aria-label="Supply chain protections">
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x1F4CC;</span>
+            <div>
+              <strong>Pinned versions</strong>
+              <p>All versions in <code>package.json</code> are exact — no <code>^</code> or <code>~</code>. A compromised new release won't auto-install.</p>
+            </div>
+          </div>
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x1F512;</span>
+            <div>
+              <strong>Lockfile integrity</strong>
+              <p><code>package-lock.json</code> is committed. CI uses <code>npm ci</code>, not <code>npm install</code>, ensuring an exact dependency tree.</p>
+            </div>
+          </div>
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x2705;</span>
+            <div>
+              <strong>npm provenance</strong>
+              <p>Every release is published with <code>--provenance</code> from GitHub Actions — a cryptographic attestation linking the package to its source commit.</p>
+            </div>
+          </div>
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x1F50D;</span>
+            <div>
+              <strong>Vulnerability scanning</strong>
+              <p><code>npm audit --audit-level=high</code> runs on every CI build. Known high-severity vulnerabilities block merges.</p>
+            </div>
+          </div>
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x270D;</span>
+            <div>
+              <strong>Signature verification</strong>
+              <p><code>npm audit signatures</code> runs in CI to verify all installed packages have valid registry signatures.</p>
+            </div>
+          </div>
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x1F916;</span>
+            <div>
+              <strong>Dependabot</strong>
+              <p>GitHub Dependabot monitors for vulnerable dependencies and opens PRs weekly. Major bumps require manual review.</p>
+            </div>
+          </div>
+          <div class="sc-protection-item">
+            <span class="sc-protection-item__icon" aria-hidden="true">&#x2796;</span>
+            <div>
+              <strong>Minimal dependency surface</strong>
+              <p>Only 5 production dependencies. Dev tooling (<code>vitest</code>, <code>typescript</code>, etc.) is excluded from the published package.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Production deps table -->
+        <div class="sc-deps">
+          <h4 class="sc-deps__heading">Production dependencies &mdash; 5 total</h4>
+          <div class="threat-table-wrap">
+            <table class="threat-table" aria-label="Production dependencies and trust rationale">
+              <thead>
+                <tr>
+                  <th scope="col">Package</th>
+                  <th scope="col">Purpose</th>
+                  <th scope="col">Why we trust it</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>fastmcp</code></td>
+                  <td>MCP protocol framework</td>
+                  <td>Active development, MCP ecosystem standard</td>
+                </tr>
+                <tr>
+                  <td><code>zod</code></td>
+                  <td>Input validation &amp; schema</td>
+                  <td>25k+ GitHub stars, widely audited</td>
+                </tr>
+                <tr>
+                  <td><code>keytar</code></td>
+                  <td>OS keychain access</td>
+                  <td>Maintained by Atom/GitHub team, native binding</td>
+                </tr>
+                <tr>
+                  <td><code>dotenv</code></td>
+                  <td>ENV file parsing</td>
+                  <td>30M+ weekly downloads, minimal surface area</td>
+                </tr>
+                <tr>
+                  <td><code>env-paths</code></td>
+                  <td>Platform data directories</td>
+                  <td>Zero dependencies, ~50 lines of code</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Verify it yourself -->
+        <div class="sc-verify">
+          <h4 class="sc-verify__heading">Verify it yourself</h4>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+            </div>
+            <div class="code-block__body">
+              <pre><span class="syn-comment"># Verify registry signatures on all installed packages</span>
+<span class="syn-prompt">$</span> npm audit signatures
+
+<span class="syn-comment"># Check provenance attestation — links package to source commit</span>
+<span class="syn-prompt">$</span> npm view @infamousjoeg/lunchmoney-mcp --json | jq <span class="syn-string">'.dist.attestations'</span></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
