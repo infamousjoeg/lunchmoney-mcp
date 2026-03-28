@@ -97,12 +97,27 @@ function initTerminal() {
     { type: 'output', parts: [
       { cls: 't-muted',  text: 'Ready to accept connections...' }
     ]},
+    { type: 'pause', duration: 2000 },
+    { type: 'blank' },
+    { type: 'command', parts: [
+      { cls: 't-prompt', text: '$ ' },
+      { cls: 't-cmd',    text: '"What did I spend on groceries last month?"' }
+    ]},
+    { type: 'pause', duration: 400 },
+    { type: 'output', parts: [
+      { cls: 't-success', text: '\u2192 ' },
+      { cls: 't-output',  text: 'Groceries: $412.83 across 47 transactions' }
+    ]},
+    { type: 'output', parts: [
+      { cls: 't-muted',  text: '  Budget remaining: $87.17 (82% used)' }
+    ]},
   ];
 
   if (prefersReducedMotion()) {
     // Render all at once
     container.innerHTML = '';
     lines.forEach(line => {
+      if (line.type === 'pause') return;
       const el = document.createElement('span');
       el.className = 'terminal__line';
       if (line.type === 'blank') {
@@ -126,6 +141,12 @@ function initTerminal() {
 
   function typeLine(lineIdx, done) {
     const line = lines[lineIdx];
+
+    if (line.type === 'pause') {
+      setTimeout(done, line.duration || 1000);
+      return;
+    }
+
     const el = document.createElement('span');
     el.className = 'terminal__line';
     container.insertBefore(el, cursor);
@@ -369,46 +390,48 @@ function initSmoothScroll() {
   });
 }
 
-/* ── Tools counter animation ─────────────────────────────── */
-function initToolsCounter() {
-  const el = document.getElementById('tools-counter');
-  if (!el) return;
+/* ── Counter animation (generic) ─────────────────────────── */
+function initCounters() {
+  const els = $$('[data-count-target]');
+  if (!els.length) return;
 
-  const target = parseInt(el.dataset.target || '37', 10);
+  els.forEach(el => {
+    const target = parseInt(el.dataset.countTarget, 10);
+    if (isNaN(target)) return;
 
-  if (prefersReducedMotion()) {
-    el.textContent = target;
-    return;
-  }
+    if (prefersReducedMotion()) {
+      el.textContent = target;
+      return;
+    }
 
-  // Start at 0, animate to target when in view
-  el.textContent = '0';
-  let started = false;
+    el.textContent = '0';
+    let started = false;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !started) {
-        started = true;
-        observer.unobserve(el);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !started) {
+          started = true;
+          observer.unobserve(el);
 
-        const duration = 900; // ms
-        const startTime = performance.now();
+          const duration = 900; // ms
+          const startTime = performance.now();
 
-        function tick(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          // Ease out cubic
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target);
-          if (progress < 1) requestAnimationFrame(tick);
+          function tick(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target);
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+
+          requestAnimationFrame(tick);
         }
+      });
+    }, { threshold: 0.5 });
 
-        requestAnimationFrame(tick);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  observer.observe(el);
+    observer.observe(el);
+  });
 }
 
 /* ── Init ────────────────────────────────────────────────── */
@@ -437,6 +460,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initToolsTabs();
   initTryIt();
   initSmoothScroll();
-  initToolsCounter();
+  initCounters();
   initVersionBadge();
 });

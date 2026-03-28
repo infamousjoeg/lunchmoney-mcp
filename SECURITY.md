@@ -101,7 +101,7 @@ npm audit                                    # check for known vulnerabilities
 |---------|---------|----------------|
 | `fastmcp` | MCP protocol framework | Active development, MCP ecosystem standard |
 | `zod` | Input validation | 25k+ GitHub stars, widely audited |
-| `keytar` | OS keychain access | Maintained by Atom/GitHub team, native binding |
+| `keytar` | OS keychain access | Community-maintained, native OS keychain binding |
 | `dotenv` | ENV file parsing | 30M+ weekly downloads, minimal surface area |
 | `env-paths` | Platform data dirs | Zero dependencies, 50 lines of code |
 

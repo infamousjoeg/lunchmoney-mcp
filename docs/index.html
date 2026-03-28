@@ -8,8 +8,12 @@
   <meta property="og:title" content="lunchmoney-mcp — The definitive MCP server for Lunch Money">
   <meta property="og:description" content="37 tools covering every Lunch Money API endpoint. Dual transport (stdio + HTTP), 4 OAuth providers, OS keychain security.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://infamousjoeg.github.io/lunchmoney-mcp/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:url" content="https://git.joeco.de/lunchmoney-mcp">
+  <meta property="og:image" content="https://git.joeco.de/lunchmoney-mcp/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://git.joeco.de/lunchmoney-mcp/assets/og-card.png">
   <title>lunchmoney-mcp — The definitive MCP server for Lunch Money</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
@@ -91,7 +95,7 @@
       <!-- Left: Copy -->
       <div class="hero__copy">
         <div class="hero__eyebrow">
-          <span class="hero__badge" id="version-badge">v0.1.0</span>
+          <span class="hero__badge" id="version-badge">v0.2.0</span>
           <span class="hero__badge-dot" aria-hidden="true"></span>
           <span class="sr-only">Active project</span>
         </div>
@@ -126,19 +130,19 @@
         <!-- Stats ribbon -->
         <div class="stats-ribbon" role="list" aria-label="Project statistics">
           <div class="stat-item" role="listitem">
-            <span class="stat-value">37</span>
+            <span class="stat-value" data-count-target="37">0</span>
             <span class="stat-label">Tools</span>
           </div>
           <div class="stat-item" role="listitem">
-            <span class="stat-value">4</span>
+            <span class="stat-value" data-count-target="4">0</span>
             <span class="stat-label">OAuth Providers</span>
           </div>
           <div class="stat-item" role="listitem">
-            <span class="stat-value">5</span>
+            <span class="stat-value" data-count-target="5">0</span>
             <span class="stat-label">Deploy Targets</span>
           </div>
           <div class="stat-item" role="listitem">
-            <span class="stat-value">278</span>
+            <span class="stat-value" data-count-target="278">0</span>
             <span class="stat-label">Tests</span>
           </div>
         </div>
@@ -378,14 +382,14 @@
             </button>
           </div>
           <div class="code-block__body">
-            <pre id="code-remote"><span class="syn-comment"># Start the HTTP server (default port 3000)</span>
-<span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp <span class="syn-flag">--transport</span> http
+            <pre id="code-remote"><span class="syn-comment"># Start the HTTP server (default port 8080)</span>
+<span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp <span class="syn-flag">--http</span>
 
 <span class="syn-comment"># With a specific port and OAuth provider</span>
+<span class="syn-prompt">$</span> export AUTH_PROVIDER=github
 <span class="syn-prompt">$</span> npx @infamousjoeg/lunchmoney-mcp \
-    <span class="syn-flag">--transport</span> http \
-    <span class="syn-flag">--port</span> <span class="syn-number">8080</span> \
-    <span class="syn-flag">--oauth</span> github</pre>
+    <span class="syn-flag">--http</span> \
+    <span class="syn-flag">--port</span> <span class="syn-number">8080</span></pre>
           </div>
         </div>
       </div>
@@ -967,7 +971,7 @@
             <div class="code-block__body">
               <pre id="code-docker"><span class="syn-prompt">$</span> docker build -t lunchmoney-mcp .
 <span class="syn-prompt">$</span> docker run -p 3000:3000 \
-    -e LUNCHMONEY_API_TOKEN=<span class="syn-string">your_token</span> \
+    -e LUNCH_MONEY_API_TOKEN=<span class="syn-string">your_token</span> \
     lunchmoney-mcp</pre>
             </div>
           </div>
@@ -1094,7 +1098,7 @@
             <div class="code-block__body">
               <pre id="code-fly"><span class="syn-prompt">$</span> fly launch --no-deploy
 <span class="syn-prompt">$</span> fly secrets set \
-    LUNCHMONEY_API_TOKEN=<span class="syn-string">your_token</span>
+    LUNCH_MONEY_API_TOKEN=<span class="syn-string">your_token</span>
 <span class="syn-prompt">$</span> fly deploy</pre>
             </div>
           </div>
@@ -1180,34 +1184,34 @@
             </thead>
             <tbody>
               <tr>
-                <td>Token exfiltration via disk read</td>
-                <td>Token stored only in OS keychain, never written to disk in plaintext</td>
-                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+                <td data-label="Threat">Token exfiltration via disk read</td>
+                <td data-label="Mitigation">Token stored only in OS keychain, never written to disk in plaintext</td>
+                <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
               </tr>
               <tr>
-                <td>Session token theft</td>
-                <td>AES-256-GCM encryption; key in keychain, not adjacent to ciphertext</td>
-                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+                <td data-label="Threat">Session token theft</td>
+                <td data-label="Mitigation">AES-256-GCM encryption; key in keychain, not adjacent to ciphertext</td>
+                <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
               </tr>
               <tr>
-                <td>Unauthorized remote access</td>
-                <td>OAuth PKCE flow required for HTTP transport; unauthenticated requests rejected</td>
-                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+                <td data-label="Threat">Unauthorized remote access</td>
+                <td data-label="Mitigation">OAuth PKCE flow required for HTTP transport; unauthenticated requests rejected</td>
+                <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
               </tr>
               <tr>
-                <td>Token leakage in logs</td>
-                <td>Tokens never included in log output; only masked references used</td>
-                <td><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
+                <td data-label="Threat">Token leakage in logs</td>
+                <td data-label="Mitigation">Tokens never included in log output; only masked references used</td>
+                <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Mitigated</span></td>
               </tr>
               <tr>
-                <td>Supply chain compromise</td>
-                <td>Minimal production dependencies; audit trail via npm provenance</td>
-                <td><span class="threat-badge threat-badge--design">By design</span></td>
+                <td data-label="Threat">Supply chain compromise</td>
+                <td data-label="Mitigation">Minimal production dependencies; audit trail via npm provenance</td>
+                <td data-label="Status"><span class="threat-badge threat-badge--design">By design</span></td>
               </tr>
               <tr>
-                <td>Privileged keychain access</td>
-                <td>OS-level access controls apply; no elevation of privilege is requested</td>
-                <td><span class="threat-badge threat-badge--design">By design</span></td>
+                <td data-label="Threat">Privileged keychain access</td>
+                <td data-label="Mitigation">OS-level access controls apply; no elevation of privilege is requested</td>
+                <td data-label="Status"><span class="threat-badge threat-badge--design">By design</span></td>
               </tr>
             </tbody>
           </table>
@@ -1238,39 +1242,39 @@
           </thead>
           <tbody>
             <tr>
-              <td>Pinned versions</td>
-              <td>All versions in <code>package.json</code> are exact — no <code>^</code> or <code>~</code>. Compromised releases won't auto-install.</td>
-              <td><span class="threat-badge threat-badge--mitigated">Enforced</span></td>
+              <td data-label="Protection">Pinned versions</td>
+              <td data-label="How it works">All versions in <code>package.json</code> are exact — no <code>^</code> or <code>~</code>. Compromised releases won't auto-install.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Enforced</span></td>
             </tr>
             <tr>
-              <td>Lockfile integrity</td>
-              <td><code>npm ci</code> reproduces the exact dependency tree from the committed <code>package-lock.json</code>.</td>
-              <td><span class="threat-badge threat-badge--mitigated">Enforced</span></td>
+              <td data-label="Protection">Lockfile integrity</td>
+              <td data-label="How it works"><code>npm ci</code> reproduces the exact dependency tree from the committed <code>package-lock.json</code>.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Enforced</span></td>
             </tr>
             <tr>
-              <td>npm provenance</td>
-              <td><code>--provenance</code> creates a cryptographic attestation linking each published package to its source commit.</td>
-              <td><span class="threat-badge threat-badge--mitigated">Enforced</span></td>
+              <td data-label="Protection">npm provenance</td>
+              <td data-label="How it works"><code>--provenance</code> creates a cryptographic attestation linking each published package to its source commit.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Enforced</span></td>
             </tr>
             <tr>
-              <td>Vulnerability scanning</td>
-              <td><code>npm audit --audit-level=high</code> runs on every CI build and blocks merges on known high-severity findings.</td>
-              <td><span class="threat-badge threat-badge--design">Automated</span></td>
+              <td data-label="Protection">Vulnerability scanning</td>
+              <td data-label="How it works"><code>npm audit --audit-level=high</code> runs on every CI build and blocks merges on known high-severity findings.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--design">Automated</span></td>
             </tr>
             <tr>
-              <td>Signature verification</td>
-              <td><code>npm audit signatures</code> verifies registry signatures on all installed packages in CI.</td>
-              <td><span class="threat-badge threat-badge--design">Automated</span></td>
+              <td data-label="Protection">Signature verification</td>
+              <td data-label="How it works"><code>npm audit signatures</code> verifies registry signatures on all installed packages in CI.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--design">Automated</span></td>
             </tr>
             <tr>
-              <td>Dependabot</td>
-              <td>Weekly monitoring for vulnerable dependencies. Major version bumps require manual review before merge.</td>
-              <td><span class="threat-badge threat-badge--design">Automated</span></td>
+              <td data-label="Protection">Dependabot</td>
+              <td data-label="How it works">Weekly monitoring for vulnerable dependencies. Major version bumps require manual review before merge.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--design">Automated</span></td>
             </tr>
             <tr>
-              <td>Minimal surface</td>
-              <td>Only 5 production dependencies. Dev tooling (<code>vitest</code>, <code>typescript</code>) is excluded from the published package.</td>
-              <td><span class="threat-badge threat-badge--design">By design</span></td>
+              <td data-label="Protection">Minimal surface</td>
+              <td data-label="How it works">Only 5 production dependencies. Dev tooling (<code>vitest</code>, <code>typescript</code>) is excluded from the published package.</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--design">By design</span></td>
             </tr>
           </tbody>
         </table>
@@ -1290,34 +1294,34 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>fastmcp</code></td>
-              <td>MCP protocol framework</td>
-              <td>1k+ GitHub stars; listed in Anthropic's official MCP servers registry</td>
-              <td><span class="threat-badge threat-badge--design">Ecosystem Std</span></td>
+              <td data-label="Package"><code>fastmcp</code></td>
+              <td data-label="Purpose">MCP protocol framework</td>
+              <td data-label="Trust rationale">1k+ GitHub stars; listed in Anthropic's official MCP servers registry</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--design">Ecosystem Std</span></td>
             </tr>
             <tr>
-              <td><code>zod</code></td>
-              <td>Input validation &amp; schema</td>
-              <td>25k+ GitHub stars, widely audited</td>
-              <td><span class="threat-badge threat-badge--mitigated">Audited</span></td>
+              <td data-label="Package"><code>zod</code></td>
+              <td data-label="Purpose">Input validation &amp; schema</td>
+              <td data-label="Trust rationale">25k+ GitHub stars, widely audited</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Audited</span></td>
             </tr>
             <tr>
-              <td><code>keytar</code></td>
-              <td>OS keychain access</td>
-              <td>Native OS keychain binding; widely adopted, community-maintained post-Atom archival</td>
-              <td><span class="threat-badge threat-badge--design">Native Binding</span></td>
+              <td data-label="Package"><code>keytar</code></td>
+              <td data-label="Purpose">OS keychain access</td>
+              <td data-label="Trust rationale">Native OS keychain binding; widely adopted, community-maintained post-Atom archival</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--design">Native Binding</span></td>
             </tr>
             <tr>
-              <td><code>dotenv</code></td>
-              <td>ENV file parsing</td>
-              <td>30M+ weekly downloads, minimal surface area</td>
-              <td><span class="threat-badge threat-badge--mitigated">Audited</span></td>
+              <td data-label="Package"><code>dotenv</code></td>
+              <td data-label="Purpose">ENV file parsing</td>
+              <td data-label="Trust rationale">30M+ weekly downloads, minimal surface area</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Audited</span></td>
             </tr>
             <tr>
-              <td><code>env-paths</code></td>
-              <td>Platform data directories</td>
-              <td>Zero dependencies, ~50 lines of code</td>
-              <td><span class="threat-badge threat-badge--mitigated">Minimal</span></td>
+              <td data-label="Package"><code>env-paths</code></td>
+              <td data-label="Purpose">Platform data directories</td>
+              <td data-label="Trust rationale">Zero dependencies, ~50 lines of code</td>
+              <td data-label="Status"><span class="threat-badge threat-badge--mitigated">Minimal</span></td>
             </tr>
           </tbody>
         </table>
@@ -1355,7 +1359,7 @@
         <div class="footer__brand">@infamousjoeg/lunchmoney-mcp</div>
         <p class="footer__credit">
           Built by <a href="https://github.com/infamousjoeg" target="_blank" rel="noopener noreferrer">Joe Garcia</a>.
-          Based on <a href="https://github.com/gijsio/lunch-money-mcp" target="_blank" rel="noopener noreferrer">lunch-money-mcp</a>
+          Based on <a href="https://github.com/gilbitron/lunch-money-mcp" target="_blank" rel="noopener noreferrer">lunch-money-mcp</a>
           by Gilbert Pellegrom.
           Released under the <a href="https://github.com/infamousjoeg/lunchmoney-mcp/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.
         </p>

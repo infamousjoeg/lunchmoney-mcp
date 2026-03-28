@@ -1327,6 +1327,64 @@ ul, ol { list-style: none; }
   background: var(--amber-subtle);
 }
 
+/* Mobile card layout for threat tables */
+@media (max-width: 599px) {
+  .threat-table,
+  .threat-table thead,
+  .threat-table tbody,
+  .threat-table tr,
+  .threat-table th,
+  .threat-table td {
+    display: block;
+  }
+
+  .threat-table thead {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .threat-table tr {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .threat-table tr:last-child { margin-bottom: 0; }
+
+  .threat-table td {
+    border-bottom: none;
+    padding: var(--space-2) 0;
+    white-space: normal;
+  }
+
+  .threat-table td:first-child {
+    white-space: normal;
+  }
+
+  .threat-table tr:hover td {
+    background: transparent;
+  }
+
+  .threat-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-1);
+  }
+}
+
 /* ── Footer — inverted amber tint, gives page visual bookend ── */
 .footer {
   /* Warm amber-tinted background — bookends the dark hero */
