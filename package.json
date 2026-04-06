@@ -44,7 +44,7 @@
   "dependencies": {
     "dotenv": "17.3.1",
     "env-paths": "4.0.0",
-    "fastmcp": "3.34.0",
+    "fastmcp": "3.35.0",
     "keytar": "7.9.0",
     "zod": "4.3.6"
   },
